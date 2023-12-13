@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GifWebViewSample.MainPage"
+             xmlns:controls="clr-namespace:GifImageLib.Controls;assembly=GifImageLib" 
+             BackgroundColor="CornflowerBlue">
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="10,0"
+            Spacing="5">
+            <Label Text="Image control" Style="{StaticResource SubHeadline}" />
+            <Grid IsClippedToBounds="true">
+                <Image x:Name="image" Source="pickle.gif" IsAnimationPlaying="True" WidthRequest="150" HeightRequest="150" />
+            </Grid>
+
+            <Label Text="GifImage control" Style="{StaticResource SubHeadline}" />
+            <controls:GifImage x:Name="gifImage" Asset="pickle.gif" WidthRequest="150" HeightRequest="150"/>
+
+            <Picker x:Name="picker" Title="Select an Aspect" SelectedIndexChanged="picker_SelectedIndexChanged" BackgroundColor="White">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>AspectFill</x:String>
+                        <x:String>AspectFit (default)</x:String>
+                        <x:String>Center</x:String>
+                        <x:String>Fill</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
