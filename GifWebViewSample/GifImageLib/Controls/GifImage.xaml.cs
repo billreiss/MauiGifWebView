@@ -38,7 +38,7 @@ public partial class GifImage : ContentView
         this.ControlTemplate = Resources[useWebView ? "WebViewTemplate" : "NativeImageTemplate"] as ControlTemplate;
         this.Unloaded += GifImage_Unloaded;
         this.SizeChanged += GifImage_SizeChanged;
-#if IOS || MACCATALYST
+#if IOS || MACCATALYST || ANDROID
         this.Loaded += GifImage_Loaded;
 #endif
     }
@@ -80,6 +80,23 @@ public partial class GifImage : ContentView
 		    {
 			    var wkWeb = handler.PlatformView as WebKit.WKWebView;
 			    wkWeb.Opaque = false;
+		    }
+        }
+    }
+#endif
+
+#if ANDROID
+    private void GifImage_Loaded(object? sender, EventArgs e)
+    {
+        var webView = this.GetTemplateChild("webView") as WebView;
+        if (webView != null)
+        {
+            var handler = webView.Handler as IWebViewHandler;
+		    if (handler != null)
+		    {
+                var wv = handler.PlatformView as Android.Webkit.WebView;
+                wv.VerticalScrollBarEnabled = false;
+                wv.HorizontalScrollBarEnabled = false;
 		    }
         }
     }
@@ -189,10 +206,6 @@ public partial class GifImage : ContentView
                     offsety = (v.Height - pixelHeight) / 2;
                     break;
             }
-            // this is a hack, I couldn't get the scrollbars to go away on the WebView on Android, so
-            // in the XAML I set the WebView margins to -5 and then we can add the offsets back here.
-            offsetx += 5;
-            offsety += 5;
 #if IOS
             // I don't know why, but to get the right results on iOS I need to multiply by 4
             offsetx *= 4;

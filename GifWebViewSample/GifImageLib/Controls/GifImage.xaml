@@ -5,9 +5,7 @@
     <ContentView.Resources>
         <ResourceDictionary>
             <ControlTemplate x:Key="WebViewTemplate">
-                <Grid WidthRequest="{TemplateBinding WidthRequest}" HeightRequest="{TemplateBinding HeightRequest}" IsClippedToBounds="true">
-                    <WebView x:Name="webView" BackgroundColor="Transparent" Margin="-5" />
-                </Grid>
+                <WebView x:Name="webView" WidthRequest="{TemplateBinding WidthRequest}" HeightRequest="{TemplateBinding HeightRequest}" BackgroundColor="Transparent" />
             </ControlTemplate>
             <ControlTemplate x:Key="NativeImageTemplate">
                 <Grid WidthRequest="{TemplateBinding Width}" HeightRequest="{TemplateBinding Height}" IsClippedToBounds="true">
