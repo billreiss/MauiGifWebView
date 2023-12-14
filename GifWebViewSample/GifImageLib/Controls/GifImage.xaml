@@ -11,7 +11,7 @@
                 <Grid WidthRequest="{TemplateBinding Width}" HeightRequest="{TemplateBinding Height}" IsClippedToBounds="true">
                     <Image x:Name="image" WidthRequest="{TemplateBinding Width}" 
                        HeightRequest="{TemplateBinding Height}" 
-                       Aspect="{TemplateBinding Aspect}" />
+                       Aspect="{TemplateBinding Aspect}" IsAnimationPlaying="true" />
                 </Grid>
             </ControlTemplate>
         </ResourceDictionary>
