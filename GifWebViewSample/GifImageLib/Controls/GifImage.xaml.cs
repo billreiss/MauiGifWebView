@@ -168,8 +168,10 @@ public partial class GifImage : ContentView
             double maxScale = Math.Max(scalex, scaley);
             double pixelWidth = rawImageWidth;
             double pixelHeight = rawImageHeight;
-            await ExtractHtmlDocument();
-
+            if (htmlTemplate == null)
+            {
+                htmlTemplate = await ExtractHtmlDocument();
+            }
             var aspect = Aspect;
             switch (aspect)
             {
@@ -238,7 +240,7 @@ public partial class GifImage : ContentView
         }
     }
 
-    private async Task ExtractHtmlDocument()
+    private async Task<string> ExtractHtmlDocument()
     {
         using Stream stream = await FileSystem.Current.OpenAppPackageFileAsync("gifTemplate.html");
         using StreamReader sr = new StreamReader(stream);
@@ -249,6 +251,6 @@ public partial class GifImage : ContentView
             if (line == null) break;
             sw.WriteLine(line);
         }
-        htmlTemplate = sw.ToString();
+        return sw.ToString();       
     }
 }
