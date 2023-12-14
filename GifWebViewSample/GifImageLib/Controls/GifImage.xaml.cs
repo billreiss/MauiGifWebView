@@ -16,7 +16,6 @@ public partial class GifImage : ContentView
 #else
     bool useWebView = false;
 #endif
-    MemoryStream? imageStream;
 
     public static readonly BindableProperty AssetProperty = BindableProperty.Create("Asset", typeof(string), typeof(GifImage), "",
         propertyChanged: AssetChanged);
@@ -36,7 +35,6 @@ public partial class GifImage : ContentView
     {
         InitializeComponent();
         this.ControlTemplate = Resources[useWebView ? "WebViewTemplate" : "NativeImageTemplate"] as ControlTemplate;
-        this.Unloaded += GifImage_Unloaded;
         this.SizeChanged += GifImage_SizeChanged;
 #if IOS || MACCATALYST || ANDROID
         this.Loaded += GifImage_Loaded;
@@ -105,12 +103,6 @@ public partial class GifImage : ContentView
     }
 #endif
 
-    private void GifImage_Unloaded(object? sender, EventArgs e)
-    {
-        if (imageStream != null) { imageStream.Dispose(); }
-        imageStream = null;
-    }
-
     public string Asset
     {
         get
@@ -161,8 +153,8 @@ public partial class GifImage : ContentView
         {
             if (fileName != null && (rawImageHeight == 0 || sourceChanged))
             {
-                // Let's load the image and get its width and height, so we know how to size the
-                // WebView.
+                // Let's load the image and get its actual width and height, so we know how to
+                // size/scale the image in the WebView.
                 using Stream inputStream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
                 src = PlatformImage.FromStream(inputStream);
                 rawImageHeight = (int)src.Height;
@@ -235,17 +227,8 @@ public partial class GifImage : ContentView
             {
                 if (fileName != null && sourceChanged)
                 {
-                    using Stream stream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
-                    // this is a hack, copying into a MemoryStream so we can hold on to it in
-                    // this instance. If we were to let the stream dispose when it leaves this
-                    // method without copying it, the image doesn't display. I have no idea
-                    // how to figure out when the stream is done so it can be disposed, so
-                    // we hold on to the stream and dispose it when the control is unloaded.
-                    // Definitely open to ideas on how to improve this.
-                    imageStream = new MemoryStream();
-                    stream.CopyTo(imageStream);
-                    imageStream.Seek(0, SeekOrigin.Begin);
-                    img.Source = ImageSource.FromStream(() => imageStream);
+                    Stream stream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
+                    img.Source = ImageSource.FromStream(() => stream);
                 }
                 else
                 {
