@@ -174,7 +174,7 @@ public partial class GifImage : ContentView
                     offsety = (v.Height - pixelHeight) / 2;
                     break;
             }
-#if IOS
+#if IOS || MACCATALYST
             // I don't know why, but to get the right results on iOS I need to multiply by 4
             offsetx *= 4;
             offsety *= 4;
