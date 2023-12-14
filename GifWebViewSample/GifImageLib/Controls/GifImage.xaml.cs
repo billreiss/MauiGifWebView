@@ -1,6 +1,6 @@
 using Microsoft.Maui.Graphics.Platform;
 using System.Diagnostics;
-using Microsoft.Maui.Handlers;
+using GifImageLib.Platforms;
 
 namespace GifImageLib.Controls;
 
@@ -36,9 +36,7 @@ public partial class GifImage : ContentView
         InitializeComponent();
         this.ControlTemplate = Resources[useWebView ? "WebViewTemplate" : "NativeImageTemplate"] as ControlTemplate;
         this.SizeChanged += GifImage_SizeChanged;
-#if IOS || MACCATALYST || ANDROID
         this.Loaded += GifImage_Loaded;
-#endif
     }
 
     private async void GifImage_SizeChanged(object? sender, EventArgs e)
@@ -67,41 +65,14 @@ public partial class GifImage : ContentView
         await OnRerenderAsync();
     }
 
-	// On iOS/Mac, we need to set the WKWebView Opaque property to false in order to support
-    // transparent GIFs
-#if IOS || MACCATALYST
 	private void GifImage_Loaded(object? sender, EventArgs e)
     {
-        var webView = this.GetTemplateChild("webView") as WebView;
+		var webView = this.GetTemplateChild("webView") as WebView;
         if (webView != null)
         {
-            var handler = webView.Handler as IWebViewHandler;
-		    if (handler != null)
-		    {
-			    var wkWeb = handler.PlatformView as WebKit.WKWebView;
-			    wkWeb.Opaque = false;
-		    }
-        }
-    }
-#endif
-
-    // On Android, we need to disable the WebKit WebView scrollbars
-#if ANDROID
-    private void GifImage_Loaded(object? sender, EventArgs e)
-    {
-        var webView = this.GetTemplateChild("webView") as WebView;
-        if (webView != null)
-        {
-            var handler = webView.Handler as IWebViewHandler;
-		    if (handler != null)
-		    {
-                var wv = handler.PlatformView as Android.Webkit.WebView;
-                wv.VerticalScrollBarEnabled = false;
-                wv.HorizontalScrollBarEnabled = false;
-		    }
-        }
-    }
-#endif
+			WebViewStartup.Initialize(webView);
+		}
+	}
 
     public string Asset
     {
