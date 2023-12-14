@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="GifImageLib.Controls.GifImage"
-             xmlns:controls="clr-namespace:HybridWebView;assembly=HybridWebView">
+             x:Class="GifImageLib.Controls.GifImage">
     <ContentView.Resources>
         <ResourceDictionary>
             <ControlTemplate x:Key="WebViewTemplate">
                 <Grid WidthRequest="{TemplateBinding WidthRequest}" HeightRequest="{TemplateBinding HeightRequest}" IsClippedToBounds="true">
-                    <WebView x:Name="webView" BackgroundColor="Transparent" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="-5" />
+                    <WebView x:Name="webView" BackgroundColor="Transparent" Margin="-5" />
                 </Grid>
             </ControlTemplate>
             <ControlTemplate x:Key="NativeImageTemplate">
