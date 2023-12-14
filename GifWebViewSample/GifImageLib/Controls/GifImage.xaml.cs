@@ -69,8 +69,10 @@ public partial class GifImage : ContentView
         await OnRerenderAsync();
     }
 
+	// On iOS/Mac, we need to set the WKWebView Opaque property to false in order to support
+    // transparent GIFs
 #if IOS || MACCATALYST
-    private void GifImage_Loaded(object? sender, EventArgs e)
+	private void GifImage_Loaded(object? sender, EventArgs e)
     {
         var webView = this.GetTemplateChild("webView") as WebView;
         if (webView != null)
@@ -85,6 +87,7 @@ public partial class GifImage : ContentView
     }
 #endif
 
+    // On Android, we need to disable the WebKit WebView scrollbars
 #if ANDROID
     private void GifImage_Loaded(object? sender, EventArgs e)
     {
