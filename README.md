@@ -3,4 +3,4 @@ Workaround for GIF not animating issue in MAUI on iOS and Android. Use the GifIm
 
 You will need to set the gif image file to build action MauiAsset instead of MauiImage for the GifImage control to find it.
 
-I used the property "Asset" instead of "Source" because I wanted to make it clear that this isn't an ImageSource, it's just a path to the MauiAsset. 
+I used the property name "Asset" instead of "Source" because I wanted to make it clear that this isn't an ImageSource, it's just a path to the MauiAsset. 
