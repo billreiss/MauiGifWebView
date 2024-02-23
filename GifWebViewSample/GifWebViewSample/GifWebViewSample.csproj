@@ -48,7 +48,7 @@
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
-		<MauiImage Update="Resources\Images\pickle.gif">
+		<MauiImage Update="Resources\Images\pickle.gif" Resize="False">
 		  <LogicalName>%(RecursiveDir)%(Filename)%(Extension)</LogicalName>
 		</MauiImage>
 
@@ -65,8 +65,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.10-nightly.10061" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.10-nightly.10061" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
 	</ItemGroup>
 
