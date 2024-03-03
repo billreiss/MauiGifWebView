@@ -1,5 +1,5 @@
 # MauiGifWebView
-NOTE: The nightly builds have a fix for GIF on iOS and Android. I fully expect it to be in the next service release, which would make this repo obsolete.
+NOTE: The nightly MAUI builds have a fix for GIF on iOS and Android. I fully expect it to be in the next service release, which would make this repo obsolete.
 
 Workaround for GIF not animating issue in MAUI on iOS and Android. Use the GifImage control as a mostly drop in replacement for the Image control for displaying GIFs. On Windows the GifImage control uses the native Image control.
 
